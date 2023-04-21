@@ -1,5 +1,7 @@
 <template>
     <div>
+        <h1 class="mb-5">All the latest Tesla news at your fingertips!</h1>
+
         <div class="article-container row g-0">
             <div class="article-card col-12 col-sm-6 col-md-4 mb-3 gx-3" v-for="item in tesla" :key="item">
                 <figure class="d-flex flex-column justify-content-between pb-1">

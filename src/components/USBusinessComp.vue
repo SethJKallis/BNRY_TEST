@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-            <h1>All the latest US Business news at your fingertips!</h1>
+            <h1 class="mb-5">All the latest US Business news at your fingertips!</h1>
     
             <div class="article-container row g-0">
                 <div class="article-card col-12 col-sm-6 col-md-4 mb-3 gx-3" v-for="item in USBusiness" :key="item">
