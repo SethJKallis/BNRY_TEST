@@ -58,25 +58,41 @@ export default createStore({
   })
  },
  fetchUSBusiness(content){
-  return fetch('http://localhost:3500/usbusiness').then((response)=> response.json()).then((usBusiness) => {
+  return fetch('http://localhost:3500/business').then((response)=> response.json()).then((usBusiness) => {
     content.commit("setUSBusiness", usBusiness.articles)
   }).catch((err)=> {
     console.warn(err)
   })
  },
  fetchTechCrunch(content){
-  return fetch('http://localhost:3500/tech-crunch').then((response) => response.json()).then((techCrunch) => {
+  return fetch('http://localhost:3500/tech').then((response) => response.json()).then((techCrunch) => {
     content.commit("setTechCrunch", techCrunch.articles)
   }).catch((err)=> {
     console.warn(err)
   })
  },
- fetchApple(content){
-  return fetch('http://localhost:3500/apple').then((response) => response.json()).then((apple)=>{
-    content.commit("setApple", apple.articles)
-  }).catch((err)=>{
-    console.warn(err)
-  })
+ fetchApple(content, payload){
+  if(payload){
+    try{
+      return fetch(`http://localhost:3500/apple`).then((response) => response.json()).then((apple)=>{
+        content.commit("setApple", apple.articles)
+      }).catch((err)=>{
+        console.warn(err)
+      })
+    }catch(err){
+      console.log(err)
+    }
+  } else {
+    try{
+      return fetch(`http://localhost:3500/apple`).then((response) => response.json()).then((apple)=>{
+        content.commit("setApple", apple.articles)
+      }).catch((err)=>{
+        console.warn(err)
+      })
+    }catch(err){
+      console.log(err)
+    }
+  }
  }
   },
   modules: {
