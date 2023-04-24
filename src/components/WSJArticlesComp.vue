@@ -1,12 +1,11 @@
 <template>
-    <div>
+    <div class="content-container">
         <h1 class="mb-2">All the latest Wall Street news at your fingertips!</h1>
         <form class="d-flex justify-content-center mb-3" role="search">
-                  <input class="form-control me-2 w-50" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+          <input class="form-control me-2 w-50" placeholder="Search Title" v-model="searchQuery">
+        </form>
         <div class="article-container row g-0">
-            <div class="article-card col-12 col-sm-6 col-md-4 mb-3 gx-3" v-for="item in wsj" :key="item">
+            <div class="article-card col-12 col-sm-6 col-md-4 mb-3 gx-3" v-for="item in filtered" :key="item.id">
                 <figure class="d-flex flex-column justify-content-between pb-1">
                     <img :src="item.urlToImage" alt="">
                     <figcaption class="article-title">{{item.title}}</figcaption>
@@ -23,17 +22,32 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { useStore } from 'vuex';
+import { computed } from '@vue/runtime-core';
 export default{
-    computed: {
-    ...mapGetters(["wsj"])
+  data(){
+    return {
+      searchQuery: ''
+    }
   },
-  methods: {
-    ...mapActions(["fetchWSJ"])
-  },
-  async created(){
-    this.fetchWSJ()
+setup(){
+  const store = useStore();
+  store.dispatch("fetchWSJ");
+  const wsj = computed(() => store.state.wsj);
+  return {
+    wsj
   }
-
+},
+computed: {
+  filtered: function(){
+    if(this.wsj == null){
+      return this.wsj;
+    } else {
+      return this.wsj.filter((item)=>{
+        return item.title.toLowerCase().match(this.searchQuery.toLocaleLowerCase())
+      });
+    }
+  }
+}
 }
 </script>

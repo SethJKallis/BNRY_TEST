@@ -1,7 +1,5 @@
 <template>
-  <div class="home">
     <HomeComp/>
-  </div>
 </template>
 
 <script>

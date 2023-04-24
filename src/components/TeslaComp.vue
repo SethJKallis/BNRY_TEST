@@ -1,12 +1,11 @@
 <template>
-    <div>
+    <div class="content-container">
         <h1 class="mb-2">All the latest Tesla news at your fingertips!</h1>
         <form class="d-flex justify-content-center mb-3" role="search">
-                  <input class="form-control me-2 w-50" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+          <input class="form-control me-2 w-50" placeholder="Search Title" v-model="searchQuery">
+        </form>
         <div class="article-container row g-0">
-            <div class="article-card col-12 col-sm-6 col-md-4 mb-3 gx-3" v-for="item in tesla" :key="item">
+            <div class="article-card col-12 col-sm-6 col-md-4 mb-3 gx-3" v-for="item in filtered" :key="item.id">
                 <figure class="d-flex flex-column justify-content-between pb-1">
                     <img :src="item.urlToImage" :alt="item.title" height="250" loading="lazy">
                     <figcaption class="article-title">{{item.title}}</figcaption>
@@ -24,17 +23,35 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { useStore } from 'vuex';
+import { computed } from '@vue/runtime-core';
 export default{
     name: 'TeslaComp',
-    computed: {
-    ...mapGetters(["tesla"])
+  data(){
+    return {
+      searchQuery:''
+    }
   },
-  methods: {
-    ...mapActions(["fetchTesla"])
+  setup(){
+    const store = useStore();
+    store.dispatch("fetchTesla");
+    const tesla = computed(()=>store.state.tesla);
+    return {
+      tesla
+    }
+    
   },
-  async created(){
-    this.fetchTesla()
+  computed: {
+    filtered: function(){
+        if(this.tesla == null){
+            return this.tesla
+        } else {
+            return this.tesla.filter((item)=>{
+                return item.title.toLowerCase().match(this.searchQuery.toLowerCase())
+            });
+            
+        }
+    }
   }
 }
 </script>

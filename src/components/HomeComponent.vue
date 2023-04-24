@@ -1,24 +1,29 @@
 <template>
-  <table class="table table-striped table-hover">
-    <thead>
-      <tr>
-        <th>Author</th>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Published On</th>
-        <th>URL Image</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="item in wsj" :key="item">
-        <td>{{ item.author }}</td>
-        <td>{{ item.title }}</td>
-        <td>{{ item.description }}</td>
-        <td>{{ item.publishedAt }}</td>
-        <td><img :src="item.urlToImage" :alt="item.title" width="150" height="100"></td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="home-container pt-2">
+    <div class="heading">
+      <h1 class="text-dark fw-bold display-5">Welcome to Binary Articles, all the latest news in one central site!</h1>
+    </div>
+    <div class="category-container">
+      <h2 class="text-light">Check out these Categories:</h2>
+      <ul>
+        <li>
+          <router-link to="/wsj-articles">Wall Street Journal Articles</router-link>
+        </li>
+        <li>
+          <router-link to="/tesla-articles">Tesla Articles</router-link>
+        </li>
+        <li>
+          <router-link to="/us-business-articles">US Business Articles</router-link>
+        </li>
+        <li>
+          <router-link to="/tech-crunch-articles">Tech Crunch Articles</router-link>
+        </li>
+        <li>
+          <router-link to="/apple-articles">Apple Articles</router-link>
+      </li>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -39,18 +44,26 @@ export default {
 </script>
 
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
+ul{
   list-style-type: none;
-  padding: 0;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
+ul li {
+  margin: 1em 0;
 }
-a {
+ul li a{
+  text-decoration: none;
+  color: #ffffff;
+  transition: all 0.25s ease 0s;
+}
+ul li a:hover{
+  letter-spacing: 1px;
   color: #42b983;
+
+}
+
+.category-container{
+  background-color: #000000a8;
+  margin: 0 4rem 10rem 4rem;
+  padding: 1em;
 }
 </style>

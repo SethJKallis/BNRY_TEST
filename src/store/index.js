@@ -46,6 +46,7 @@ export default createStore({
      fetchWSJ(content){
       return fetch('http://localhost:3500/wsj').then((response) => response.json()).then((wsj) => {
         content.commit("setWSJ", wsj.articles)
+        console.log(wsj)
       }).catch((err) => {
         console.warn(err);
       })
@@ -71,18 +72,7 @@ export default createStore({
     console.warn(err)
   })
  },
- fetchApple(content, payload){
-  if(payload){
-    try{
-      return fetch(`http://localhost:3500/apple`).then((response) => response.json()).then((apple)=>{
-        content.commit("setApple", apple.articles)
-      }).catch((err)=>{
-        console.warn(err)
-      })
-    }catch(err){
-      console.log(err)
-    }
-  } else {
+ fetchApple(content){
     try{
       return fetch(`http://localhost:3500/apple`).then((response) => response.json()).then((apple)=>{
         content.commit("setApple", apple.articles)
@@ -93,7 +83,6 @@ export default createStore({
       console.log(err)
     }
   }
- }
   },
   modules: {
   }

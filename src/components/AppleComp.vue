@@ -1,12 +1,11 @@
 <template>
-    <div>
+    <div class="content-container">
         <h1 class="mb-2">All the latest Apple news at your fingertips!</h1>
         <form class="d-flex justify-content-center mb-3" role="search">
-                  <input class="form-control me-2 w-50" placeholder="Search">
-                  <button id="appleSearch" class="btn btn-outline-success" v-on:click.prevent="searchQuery()">Search</button>
+                  <input class="form-control me-2 w-50" placeholder="Search Title" v-model="searchQuery">
                 </form>
         <div class="article-container row g-0">
-            <div class="article-card col-12 col-sm-6 col-md-4 mb-3 gx-3" v-for="item in apple" :key="item">
+            <div class="article-card col-12 col-sm-6 col-md-4 mb-3 gx-3" v-for="item in filtered" :key="item.id">
                 <figure class="d-flex flex-column justify-content-between pb-1">
                     <img :src="item.urlToImage" :alt="item.title" height="250">
                     <figcaption class="article-title">{{item.title}}</figcaption>
@@ -23,27 +22,36 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { useStore } from 'vuex';
+import { computed } from '@vue/runtime-core';
 export default{
     name: "AppleComp",
+    data(){
+        return {
+            searchQuery: ''
+        }
+    },
+    setup(){
+        const store = useStore();
+        store.dispatch("fetchApple");
+        const apple = computed(()=>store.state.apple);
+        return {
+            apple,
+        }
+    },
 computed: {
-    ...mapGetters(["apple"])
-  },
-methods: {
-    ...mapActions(["fetchApple"]),
-    searchQuery(){
-        try{
-            let searchQuery = document.querySelector('#appleSearch').value;
-            console.log(searchQuery)
+    filtered: function(){
+        if(this.apple == null){
+            return this.apple
+        } else {
+            return this.apple.filter((item)=>{
+                return item.title.toLowerCase().match(this.searchQuery.toLowerCase())
+            });
             
-        } catch(err){
-            console.log(err)
         }
     }
+
   },
-async created(){
-    this.fetchApple()
-  }
 
 }
 </script>
