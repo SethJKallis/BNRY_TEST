@@ -2,7 +2,7 @@
     <div>
         <nav class="navbar bg-dark navbar-dark py-3">
             <div class="container-fluid">
-              <a class="navbar-brand" href="#">Binary Articles</a>
+              <router-link to="/" class="navbar-brand">Binary Articles</router-link>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>

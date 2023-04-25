@@ -1,5 +1,8 @@
 <template>
-    <div class="content-container">
+    <div v-if="!filtered">
+        <LoaderComp/>
+      </div>
+    <div v-else-if="filtered" class="content-container">
         <div>
             <h1 class="mb-2">All the latest US Business news at your fingertips!</h1>
             <form class="d-flex justify-content-center mb-3" role="search">
@@ -27,6 +30,8 @@
 <script>
 import { useStore } from 'vuex';
 import { computed } from '@vue/runtime-core';
+import LoaderComp from '@/components/LoaderComponent.vue'
+
 export default{
     name:"USBusinessComp",
     data(){
@@ -34,6 +39,9 @@ export default{
             searchQuery:''
         }
     },
+  components: {
+    LoaderComp
+  },
     setup(){
         const store = useStore();
         store.dispatch("fetchUSBusiness");

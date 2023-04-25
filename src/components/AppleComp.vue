@@ -1,5 +1,8 @@
 <template>
-    <div class="content-container">
+    <div v-if="!filtered">
+        <LoaderComp/>
+      </div>
+    <div v-else-if="filtered" class="content-container">
         <h1 class="mb-2">All the latest Apple news at your fingertips!</h1>
         <form class="d-flex justify-content-center mb-3" role="search">
                   <input class="form-control me-2 w-50" placeholder="Search Title" v-model="searchQuery">
@@ -24,6 +27,8 @@
 <script>
 import { useStore } from 'vuex';
 import { computed } from '@vue/runtime-core';
+import LoaderComp from '@/components/LoaderComponent.vue'
+
 export default{
     name: "AppleComp",
     data(){
@@ -31,6 +36,9 @@ export default{
             searchQuery: ''
         }
     },
+  components: {
+    LoaderComp
+  },
     setup(){
         const store = useStore();
         store.dispatch("fetchApple");

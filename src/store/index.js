@@ -46,7 +46,6 @@ export default createStore({
      fetchWSJ(content){
       return fetch('http://localhost:3500/wsj').then((response) => response.json()).then((wsj) => {
         content.commit("setWSJ", wsj.articles)
-        console.log(wsj)
       }).catch((err) => {
         console.warn(err);
       })
